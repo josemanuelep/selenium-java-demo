@@ -41,6 +41,46 @@ Selenium is an umbrella project for a range of tools and libraries that enable a
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.4.0'
 </code>
 
+3. Three Ways to Use Drivers: 
+
+3.1  Driver Management Software: Most machines automatically update the browser, but the driver does not. To make sure you get the correct driver for your browser, there are many third party libraries to assist you. 
+
+* Include dependency into gradle file
+
+// https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
+<code>implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.0'</code>
+
+<code>
+
+class ChromeTest {
+
+    WebDriver driver;
+
+    @BeforeAll
+    static void setupAll() {
+        WebDriverManager.chromedriver().setup();
+    }
+
+    @BeforeEach
+    void setup() {
+        driver = new ChromeDriver();
+    }
+
+    @AfterEach
+    void teardown() {
+        driver.quit();
+    }
+
+    @Test
+    void test() {
+        // Your test logic here
+    }
+
+}
+
+</code>
+
+
 
  
  
