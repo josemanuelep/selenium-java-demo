@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.remote.*;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.*;
 
@@ -26,7 +27,7 @@ class LibraryTest {
         driver.manage().window().maximize();
         String title = driver.getTitle();
         assertEquals("Web form", title);
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
     }
 
     @AfterEach
@@ -35,14 +36,22 @@ class LibraryTest {
     }
 
     @Test
-    public void eightComponents() {
+    public void fillForm() {
 
         WebElement textBox = driver.findElement(By.name("my-text"));
+        WebElement password = driver.findElement(By.name("my-password"));
+        WebElement textArea = driver.findElement(By.name("my-textarea"));
+        Select optionSelect = new Select(driver.findElement(By.name("my-select")));
+        WebElement check1 = driver.findElement(By.id("my-check-1"));
+        WebElement check2 = driver.findElement(By.id("my-check-2"));
         WebElement submitButton = driver.findElement(By.cssSelector("button"));
-
         textBox.sendKeys("Selenium");
+        password.sendKeys("123456");
+        textArea.sendKeys("I am testing with selenium over chrome browser");
+        optionSelect.selectByIndex(1);
+        check1.click();
+        check2.click();
         submitButton.click();
-
         WebElement message = driver.findElement(By.id("message"));
         String value = message.getText();
         assertEquals("Received!", value);
